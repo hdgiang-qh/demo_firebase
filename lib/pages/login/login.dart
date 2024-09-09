@@ -8,8 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 class Login extends StatelessWidget {
   Login({super.key});
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(text: "odeyaing303@gmail.com");
+  final TextEditingController _passwordController = TextEditingController(text: "123456789");
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class Login extends StatelessWidget {
           controller: _emailController,
           decoration: InputDecoration(
               filled: true,
-              hintText: 'mahdiforwork@gmail.com',
+              hintText: 'email@gmail.com',
               hintStyle: const TextStyle(
                   color: Color(0xff6A6A6A),
                   fontWeight: FontWeight.normal,
@@ -157,7 +157,7 @@ class Login extends StatelessWidget {
             context: context
         );
       },
-      child: const Text("Sign In"),
+      child: const Text("Sign In",style: TextStyle(color: Colors.white),),
     );
   }
 
