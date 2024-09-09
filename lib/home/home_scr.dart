@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Hello👋',
+                'Hello👋, Confirm',
                 style: GoogleFonts.raleway(
                     textStyle: const TextStyle(
                         color: Colors.black,
