@@ -163,7 +163,7 @@ class Login extends StatelessWidget {
 
   Widget _signup(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 24),
       child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
