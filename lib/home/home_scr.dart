@@ -4,6 +4,7 @@ import 'package:demo_firebase/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
@@ -59,6 +60,26 @@ class _HomeState extends State<Home> {
                             Text("Old: ${user['age']}"),
                             Text("Title: ${user['title']}"),
                           ],
+                        ),
+                        trailing: SizedBox(
+                          width: 100,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  Feature()
+                                      .update(context: context, itemUser: user);
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete,color: Colors.red,),
+                                onPressed: () {
+                                  Feature().delete(id: user.id);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
