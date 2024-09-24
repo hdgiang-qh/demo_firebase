@@ -1,4 +1,3 @@
-
 import 'package:demo_firebase/pages/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,9 +6,7 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
@@ -33,18 +30,17 @@ class _MyAppState extends State<MyApp> {
     _firebaseMessaging.requestPermission();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Đã nhận thông báo khi ứng dụng đang chạy: ${message.notification?.title}");
+      print(
+          "Đã nhận thông báo khi ứng dụng đang chạy: ${message.notification?.title}");
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print("Ứng dụng được mở từ thông báo: ${message.notification?.title}");
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Login()
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: Login());
   }
 }
