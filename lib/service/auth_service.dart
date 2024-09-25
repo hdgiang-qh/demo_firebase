@@ -46,6 +46,14 @@ class AuthService {
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) => const Home()));
+     await Fluttertoast.showToast(
+        msg: "Login Success",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'invalid-email') {
