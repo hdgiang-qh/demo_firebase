@@ -1,4 +1,5 @@
 import 'package:demo_firebase/pages/login/login.dart';
+import 'package:demo_firebase/service/push_notificcation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  await FirebaseApi.initNotifications();
   runApp(const MyApp());
 }
 
@@ -22,7 +23,6 @@ class _MyAppState extends State<MyApp> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   @override
   void initState() {
-    _configureFirebaseMessaging();
     super.initState();
   }
 

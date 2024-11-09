@@ -27,3 +27,22 @@
 //
 //   }
 // }
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+class FirebaseApi {
+  static Future<void> initNotifications() async {
+    try {
+      // Request permission first
+      final settings = await FirebaseMessaging.instance.requestPermission();
+
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        // Get FCM token only after permission is granted
+        final fcmToken = await FirebaseMessaging.instance.getToken();
+        print('FCM Token: $fcmToken');
+      }
+    } catch (e) {
+      print('Error initializing notifications: $e');
+    }
+  }
+}

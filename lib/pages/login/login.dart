@@ -1,3 +1,5 @@
+import 'package:demo_firebase/pages/forgot_pass/reset_pass.dart';
+import 'package:demo_firebase/pages/login/with_phone.dart';
 import 'package:demo_firebase/pages/signup/signup.dart';
 import 'package:demo_firebase/service/auth_service.dart';
 import 'package:flutter/gestures.dart';
@@ -63,10 +65,22 @@ class Login extends StatelessWidget {
                 height: 20,
               ),
               _password(),
-              const SizedBox(
-                height: 50,
-              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const ResetPasswordScreen()));
+                  },
+                  child: const Align(
+                      alignment: Alignment.centerRight,
+                      child: Text("Forgot password"))),
               _signin(context),
+              const SizedBox(
+                height: 20,
+              ),
+             // withPhone(context),
             ],
           ),
         ),
@@ -156,6 +170,29 @@ class Login extends StatelessWidget {
       },
       child: const Text(
         "Sign In",
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  Widget withPhone(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xff0D6EFD),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+        minimumSize: const Size(double.infinity, 60),
+        elevation: 0,
+      ),
+      onPressed: () async {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => const PhoneAuthScreen()));
+      },
+      child: const Text(
+        "Your Phone",
         style: TextStyle(color: Colors.white),
       ),
     );

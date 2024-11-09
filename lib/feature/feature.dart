@@ -38,8 +38,32 @@ class Feature {
         });
   }
 
+  Future<void> updateRealtime(
+      {required BuildContext context, required var itemUser, required String keyId}) async {
+    _controllerNameRTUpdate.text = itemUser['name'];
+    _controllerAgeRTUpdate.text = itemUser['age'];
+    _controllerTitleRTUpdate.text = itemUser['title'];
+    return showDialog(
+        context: context,
+        builder: (BuildContext contexts) {
+          return myDialogUpdateRealtime(context: contexts, item: itemUser,keyId: keyId);
+        });
+  }
+
   Future<void> delete({required String id}) async {
     myItem.doc(id).delete();
+    await Fluttertoast.showToast(
+      msg: "Delete Success",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.SNACKBAR,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+      fontSize: 14.0,
+    );
+  }
+
+  Future<void> deleteRT({required String id}) async {
+    databaseRealtime.child(id).remove();
     await Fluttertoast.showToast(
       msg: "Delete Success",
       toastLength: Toast.LENGTH_LONG,
@@ -69,6 +93,10 @@ class Feature {
   final TextEditingController _controllerNameUpdate = TextEditingController();
   final TextEditingController _controllerAgeUpdate = TextEditingController();
   final TextEditingController _controllerTitleUpdate = TextEditingController();
+
+  final TextEditingController _controllerNameRTUpdate = TextEditingController();
+  final TextEditingController _controllerAgeRTUpdate = TextEditingController();
+  final TextEditingController _controllerTitleRTUpdate = TextEditingController();
 
   Dialog myDialogCreate({required BuildContext context}) => Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -121,6 +149,7 @@ class Feature {
                   border: OutlineInputBorder(),
                   labelText: 'Age',
                 ),
+                keyboardType: TextInputType.number,
               ),
               const SizedBox(
                 height: 20,
@@ -230,8 +259,9 @@ class Feature {
                 style: const TextStyle(fontSize: 14),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Age',
+                  labelText: 'Age'
                 ),
+                keyboardType: TextInputType.number,
               ),
               const SizedBox(
                 height: 20,
@@ -270,7 +300,8 @@ class Feature {
                       fontSize: 14.0,
                     );
                   } else {
-                    final id = DateTime.now().microsecondsSinceEpoch.toString();
+                    final now = DateTime.now();
+                    String id = "${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}";
                     databaseRealtime.child(id).set({
                       'name': _controllerNameRT.text.toString(),
                       'age': _controllerAgeRT.text.toString(),
@@ -352,6 +383,7 @@ class Feature {
                   border: OutlineInputBorder(),
                   labelText: 'Age',
                 ),
+                keyboardType: TextInputType.number,
               ),
               const SizedBox(
                 height: 20,
@@ -394,6 +426,123 @@ class Feature {
                       'name': _controllerNameUpdate.text.toString(),
                       'age': _controllerAgeUpdate.text.toString(),
                       'title': _controllerTitleUpdate.text.toString()
+                    });
+                    Navigator.pop(context);
+                    await Fluttertoast.showToast(
+                      msg: "Update Success",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.SNACKBAR,
+                      backgroundColor: Colors.black54,
+                      textColor: Colors.white,
+                      fontSize: 14.0,
+                    );
+                  }
+                },
+                child: const Text(
+                  "Update",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+
+  Dialog myDialogUpdateRealtime({required BuildContext context, required var item, required keyId}) =>
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(10)),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  const Expanded(
+                    child: Center(
+                      child: Text(
+                        "Update User Data",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+              TextField(
+                controller: _controllerNameRTUpdate,
+                obscureText: false,
+                style: const TextStyle(fontSize: 14),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: _controllerAgeRTUpdate,
+                obscureText: false,
+                style: const TextStyle(fontSize: 14),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Age',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: _controllerTitleRTUpdate,
+                obscureText: false,
+                style: const TextStyle(fontSize: 14),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Title',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xff0D6EFD),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  minimumSize: const Size(double.infinity, 60),
+                  elevation: 0,
+                ),
+                onPressed: () async {
+                  if (_controllerNameRTUpdate.text.isEmpty ||
+                      _controllerTitleRTUpdate.text.isEmpty ||
+                      _controllerAgeRTUpdate.text.isEmpty) {
+                    Fluttertoast.showToast(
+                      msg: "Value is Empty",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.SNACKBAR,
+                      backgroundColor: Colors.red.shade400,
+                      textColor: Colors.white,
+                      fontSize: 14.0,
+                    );
+                  } else {
+                    databaseRealtime.child(keyId).update({
+                      'name': _controllerNameRTUpdate.text.toString(),
+                      'age': _controllerAgeRTUpdate.text.toString(),
+                      'title': _controllerTitleRTUpdate.text.toString()
                     });
                     Navigator.pop(context);
                     await Fluttertoast.showToast(

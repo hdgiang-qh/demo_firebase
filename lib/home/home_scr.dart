@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_firebase/feature/feature.dart';
+import 'package:demo_firebase/image_page/image_src.dart';
 import 'package:demo_firebase/realtime_home/realtime_home.dart';
 import 'package:demo_firebase/service/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -72,8 +69,9 @@ class _HomeState extends State<Home> {
                                     IconButton(
                                       icon: const Icon(Icons.edit),
                                       onPressed: () {
-                                        Feature().update(
-                                            context: context, itemUser: user);
+                                        print(user.id);
+                                        // Feature().update(
+                                        //     context: context, itemUser: user);
                                       },
                                     ),
                                     IconButton(
@@ -97,15 +95,29 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const RealtimeHome()));
-                },
-                child: const Text("Text"))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const ImageSrc()));
+                    },
+                    child: const Text("Image Loader")),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const RealtimeHome()));
+                    },
+                    child: const Text("Realtime Database")),
+              ],
+            )
           ],
         ),
       ),

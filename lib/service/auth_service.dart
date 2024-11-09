@@ -78,4 +78,25 @@ class AuthService {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (BuildContext context) => Login()));
   }
+
+  Future<String?> resetPassword({required String email}) async {
+    try {
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      await auth.sendPasswordResetEmail(email: email);
+      return 'Đã gửi email reset password. Vui lòng kiểm tra hộp thư của bạn.';
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'invalid-email':
+          return 'Email không hợp lệ';
+        case 'user-not-found':
+          return 'Không tìm thấy tài khoản với email này';
+        case 'too-many-requests':
+          return 'Quá nhiều yêu cầu. Vui lòng thử lại sau';
+        default:
+          return 'Đã xảy ra lỗi: ${e.message}';
+      }
+    } catch (e) {
+      return 'Đã xảy ra lỗi không xác định';
+    }
+  }
 }
